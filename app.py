@@ -13,11 +13,6 @@ app.secret_key = 'isaac'
 api = Api(app)
 
 
-@app.before_first_request
-def create_table():
-    db.create_all()
-
-
 jwt = JWT(app, authenticate, identity)  # when initialize it creates endpoint called /auth
 
 api.add_resource(Item, '/item/<string:name>')
@@ -26,9 +21,3 @@ api.add_resource(UserRegister, '/register')
 api.add_resource(UserList, '/users')
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(StoreList, '/stores')
-
-if __name__ == '__main__':
-    from Code.db import db
-
-    db.init_app(app)
-    app.run(port=5000, debug=True)
